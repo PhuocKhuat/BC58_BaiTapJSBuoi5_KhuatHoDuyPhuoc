@@ -14,18 +14,21 @@ var nutXuatKQ = domID('nutXuatKQ').onclick = function () {
     var tongDiem = 0;
     //PROGRESS
     if (diemMonThu1 > 0 && diemMonThu2 > 0 && diemMonThu3 > 0) {
+        //B1: Tính tổng điểm
         tongDiem = diemMonThu1 + diemMonThu2 + diemMonThu3 + khuVuc + doiTuongDuThi;
+        //B2: Xét điều kiện if
+        //Nếu tổng điểm >= điểm hội đồng
         if (tongDiem >= diemchuanHoiDong) {
-            //OUTPUT: Cho biết thí sinh đó đậu hay rớt và tổng số điểm đạt được.
+            //OUTPUT: Cho biết thí sinh đó đậu và tổng số điểm đạt được.
             ketQuaTongDiem.innerHTML = `Bạn đã đậu. Tổng điểm là ${tongDiem} `;
         }
         else {
-            //OUTPUT:
+            //OUTPUT:Cho biết thí sinh đó rớt và tổng số điểm đạt được.
             ketQuaTongDiem.innerHTML = `Bạn đã rớt. Tổng điểm là ${tongDiem}`;
         }
     }
     else if (diemMonThu1 == 0 || diemMonThu2 == 0 || diemMonThu3 == 0) {
-        //OUTPUT:
+        //OUTPUT:Cho biết thí sinh đó rớt và có 1 môn bằng 0.
         ketQuaTongDiem.innerHTML = `Bạn đã rớt. Do có 1 môn điểm bằng 0`;
     }
     else {
@@ -41,10 +44,11 @@ var nutXuatKQ = domID('nutXuatKQ').onclick = function () {
 // 150kw kế : 1100d/Kw    
 // Còn lại : 1300d/Kw
 var nutTienDien = domID('nutTienDien').onclick = function () {
-    //INPUT
+    //INPUT: nhập vào thông tin tiêu thụ điện ((Tên, số Kw)) 
     var ten = domID('ten').value;
     var soKW = Number(domID('soKW').value);
-    //PROGRESS
+    //PROGRESS:
+    //B1: Khai báo các mức KW điện
     var tongDien = 0;
     const kW1 = 500;
     const kW2 = 650;
@@ -52,57 +56,89 @@ var nutTienDien = domID('nutTienDien').onclick = function () {
     const kW4 = 1100;
     const kW5 = 1300;
     var ketQuaTienDien = domID('ketQuaTienDien');
+    //B2: 
+    //B2.1: Nếu soKW > 0 && soKW <= 50
     if (soKW > 0 && soKW <= 50) {
+        //Thì tongDien = soKW * kW1
         tongDien = soKW * kW1;
+        //B2.2: Nếu soKW > 50 && soKW <= 100
     } else if (soKW > 50 && soKW <= 100) {
+        //Thì tongDien = 50 * kW1 + (soKW - 50) * kW2;
         tongDien = 50 * kW1 + (soKW - 50) * kW2;
+        //B2.3: Nếu soKW > 100 && soKW <= 200
     } else if (soKW > 100 && soKW <= 200) {
+        //Thì tongDien = 50 * kW1 + 50 * kW2 + (soKW - 100) * kW3
         tongDien = 50 * kW1 + 50 * kW2 + (soKW - 100) * kW3;
+        //B2.4:Nếu soKW > 200 & soKW <= 350
     } else if (soKW > 200 & soKW <= 350) {
+        //Thì tongDien = 50 * kW1 + 50 * kW2 + 100 * kW3 + (soKW - 200) * kW4
         tongDien = 50 * kW1 + 50 * kW2 + 100 * kW3 + (soKW - 200) * kW4;
+        //B2.5: Nếu soKW > 350
     } else if (soKW > 350) {
+        //Thì tongDien = 50 * kW1 + 50 * kW2 + 100 * kW3 + 150 * kW4 + (soKW - 350) * kW5 
         tongDien = 50 * kW1 + 50 * kW2 + 100 * kW3 + 150 * kW4 + (soKW - 350) * kW5;
-    } else {
+    }
+    //B2.6: Ngược lại số KW không hợp lệ
+    else {
         alert('Số KW không hợp lệ, vui lòng kiểm tra lại');
     }
+    //OUTPUT: Xuất ra họ tên và tiền điện.
     ketQuaTienDien.innerHTML = `Họ và tên: ${ten}, Tiền điện là: ${tongDien.toLocaleString()} VND`;
 }
 
 // Viết chương trình nhập vào thông tin của 1 cá nhân (Họ tên, tổng thu nhập năm, số người phụ thuộc). Tính và xuất thuế thu nhập cá nhân phải trả theo quy định sau: Thu nhập chịu thuế = Tổng thu nhập năm - 4tr- Số người phụ thuộc * 1.6tr.
 var tinhThue = domID('tinhThue').onclick = function () {
-    //input
+    //INPUT: nhập vào thông tin của 1 cá nhân
     var hoTen = domID('hoTen').value;
     var tongThuNhap = parseInt(domID('tongThuNhap').value);
     var nguoiPhuThuoc = parseInt(domID('nguoiPhuThuoc').value);
     var tongThue = 0;
     var thuNhapChiuThue = tongThuNhap - 4e+6 - nguoiPhuThuoc - 16e+5;
-    //progress
+    //PROGRESS: 
+    //B1: Nếu thuNhapChiuThue > 0 && thuNhapChiuThue <= 6e+7
     if (thuNhapChiuThue > 0 && thuNhapChiuThue <= 6e+7) {
+        //Thì tongThue = thuNhapChiuThue * 0.05;
         tongThue = thuNhapChiuThue * 0.05;
-    } else if (thuNhapChiuThue > 6e+7 && thuNhapChiuThue <= 12e+7) {
+    }
+    //B2: Nếu thuNhapChiuThue > 6e+7 && thuNhapChiuThue <= 12e+7 
+    else if (thuNhapChiuThue > 6e+7 && thuNhapChiuThue <= 12e+7) {
+        //Thì tongThue = thuNhapChiuThue * 0.1;
         tongThue = thuNhapChiuThue * 0.1;
-    } else if (thuNhapChiuThue > 12e+7 && thuNhapChiuThue <= 21e+7) {
+    }
+    //B3: Nếu thuNhapChiuThue > 12e+7 && thuNhapChiuThue <= 21e+7 
+    else if (thuNhapChiuThue > 12e+7 && thuNhapChiuThue <= 21e+7) {
+        //Thì tongThue = thuNhapChiuThue * 0.15;
         tongThue = thuNhapChiuThue * 0.15;
     }
+    //B4: Nếu thuNhapChiuThue > 21e+7 && thuNhapChiuThue <= 384e+6
     else if (thuNhapChiuThue > 21e+7 && thuNhapChiuThue <= 384e+6) {
+        //Thì tongThue = thuNhapChiuThue * 0.2;
         tongThue = thuNhapChiuThue * 0.2;
     }
+    //B5: Nếu thuNhapChiuThue > 384e+6 && thuNhapChiuThue <= 624e+6
     else if (thuNhapChiuThue > 384e+6 && thuNhapChiuThue <= 624e+6) {
+        //Thì tongThue = thuNhapChiuThue * 0.25;
         tongThue = thuNhapChiuThue * 0.25;
     }
+    //B6: Nếu thuNhapChiuThue > 624e+6 && thuNhapChiuThue <= 96e+7
     else if (thuNhapChiuThue > 624e+6 && thuNhapChiuThue <= 96e+7) {
+        //Thì tongThue = thuNhapChiuThue * 0.3;
         tongThue = thuNhapChiuThue * 0.3;
     }
+    //B7: Nếu thuNhapChiuThue > 96e+7
     else if (thuNhapChiuThue > 96e+7) {
+        //Thì tongThue = thuNhapChiuThue * 0.35;
         tongThue = thuNhapChiuThue * 0.35;
-    } else {
+    }
+    //B8: Ngược lại in ra số tiền không hợp lệ
+    else {
         alert("Số tiền nhập không hợp lệ !")
     }
-    //output
+    //OUTPUT: Xuất ra họ tên và số tiền thuế khi người dùng nhập
     tongThue = new Intl.NumberFormat('vn-VN').format(tongThue);
-    var ketQuaThue = domID('ketQuaThue').innerHTML = `Họ tên : ${hoTen} - Tiền thuế : ${tongThue} VND`;
+    var ketQuaThue = domID('ketQuaThue');
+    ketQuaThue.innerHTML = `Họ tên : ${hoTen} - Tiền thuế : ${tongThue} VND`;
 }
-
 //❖ Viết chương trình tính hóa đơn khách hàng cho một công ty cáp. Có 2 loại khách hàng: Nhà dân và doanh nghiệp. Có 2 mức giá tính tiền cáp:
 // 1.Nhà dân:
 // • Phí xử lý hóa đơn: 4.5$
@@ -114,35 +150,63 @@ var tinhThue = domID('tinhThue').onclick = function () {
 // • Thuê kênh cao cấp: 50$ / kênh
 // ❖ Chương trình cho phép nhập vào Mã khách hàng, loại khách hàng, số kết nối, số kênh cao cấp. Nếu chọn loại khách hàng là Doanh nghiệp ô nhập số kết nối sẽ hiện lên, nếu chọn loại khách hàng là nhà dân thì ô nhập kết nối sẽ ẩn đi hoặc disabled
 
+//PROGRESS:
+//Tạo hàm anTheInput() 
 function anTheInput() {
+    //B1: Dom đến ID có tên là loaiKhachHang
     var loaiKhachHang = domID('loaiKhachHang').value;
+    //B2: loaiKhachHang == 'Nhà dân' hoặc loaiKhachHang == 'Chọn loại khách hàng' 
     if (loaiKhachHang == 'Nhà dân' || loaiKhachHang == 'Chọn loại khách hàng') {
+        //Thì số kết nối bị ẩn
         domID('soKetNoi').style.display = "none";
+        //Ngược lại nếu loaiKhachHang == 'Doanh nghiệp' thì hiện
     } else if (loaiKhachHang == 'Doanh nghiệp') {
         domID('soKetNoi').style.display = "block";
     }
 }
 var tinhTienCap = document.getElementById('tinhTienCap').onclick = function () {
-    //input: nhập vào Mã khách hàng, loại khách hàng, số kết nối, số kênh cao cấp
+    //INPUT: nhập vào Mã khách hàng, loại khách hàng, số kết nối, số kênh cao cấp
     var loaiKhachHang = domID('loaiKhachHang').value;
     var maKhachHang = domID('maKhachHang').value; //75$ cho tổng 10 kết nối đầu là mã khách hàng
     var soKenhCaoCap = domID('soKenhCaoCap').value * 1;
     var soKetNoi = domID('soKetNoi').value * 1;
-    var tongKetNoi = 10;
-    //progress
-    if (loaiKhachHang == 'Doanh Nghiệp') {
-        tongKetNoi = tinhTong(15, 75, 50, soKenhCaoCap, soKetNoi, 5);
+    var tienCap = 0;
+    //PROGRESS
+    // B3: Nếu loaiKhachHang == 'Doanh nghiệp' 
+    if (loaiKhachHang == 'Doanh nghiệp') {
+        // var hoaDon = 15;
+        var hoaDon = 15;
+        // Nếu soKetNoi > 10 
+        if (soKetNoi > 10) {
+            //Thì dichVu = 75 + (soKetNoi - 10) * 5 
+            var dichVu = 75 + (soKetNoi - 10) * 5;
+            //Ngược lại nếu soKetNoi < 10
+        } else if (soKetNoi < 10) {
+            //dichVu = 75
+            var dichVu = 75;
+        }
+        //Tính kenh = 50 * soKenhCaoCap 
+        var kenh = 50 * soKenhCaoCap;
+        //Tính tienCap = hoaDon + dichVu + kenh 
+        var tienCap = hoaDon + dichVu + kenh;
+        //Nếu loaiKhachHang == 'Nhà dân'
     } else if (loaiKhachHang == 'Nhà dân') {
-        tongKetNoi = tinhTong(4.5, 20.5, 7.5, soKenhCaoCap, 0, 0);
+        // var hoaDon = 4.5;
+        var hoaDon = 4.5;
+        // var dichVu = 20.5;
+        var dichVu = 20.5;
+        //Tính kenh = 7.5 * soKenhCaoCap 
+        var kenh = 7.5 * soKenhCaoCap;
+        //Tính tienCap = (hoaDon + dichVu + kenh) 
+        var tienCap = (hoaDon + dichVu + kenh);
+        //Ngược lại nếu loaiKhachHang == 'Chọn loại khách hàng' 
     } else if (loaiKhachHang == 'Chọn loại khách hàng') {
+        //Xuất câu thông báo chọn loại khách hàng
         alert("Hãy chọn loại khách hàng");
     }
+    //OUTPUT: Xuất ra mã khách hàng và tiền cáp khi người dùng nhập.
     var ketQuaTienCap = document.getElementById('ketQuaTienCap');
-    ketQuaTienCap.innerHTML = `Mã khách hàng: ${maKhachHang} - Tiền cáp: ${tongKetNoi} `;
+    ketQuaTienCap.innerHTML = `Mã khách hàng: ${maKhachHang} - Tiền cáp: $${tienCap} `;
+}
 
-}
-function tinhTong(loaiKhachHang, maKhachHang, soKenhCaoCap, soKetNoi, tongKetNoi, so$MoiKetNoi) {
-    var tong = loaiKhachHang + maKhachHang + soKenhCaoCap * soKetNoi * 7.5;
-    return tongKetNoi > 10 && (tong += (tongKetNoi - 10) * so$MoiKetNoi);
-}
 
