@@ -1,0 +1,12 @@
+Các tham số:
+ten
+soKW
+tongDien
+50kw đầu
+50kw kế
+100kw kế
+150kw kế
+Còn lại
+
+Hàm:
+nutTienDien
